@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Tabletop AI Assistant</string>
+
+    <!-- Chat screen -->
+    <string name="chat_title">🎲 Tabletop AI Assistant</string>
+    <string name="action_settings">Настройки</string>
+    <string name="welcome_message">🎲 Tabletop AI Assistant запущен. Задайте вопрос по настольным играм.</string>
+    <string name="action_retry">Повторить</string>
+    <string name="input_placeholder">Вопрос о настольных играх...</string>
+    <string name="action_send">Отправить</string>
+    <string name="status_ready">Готов ✅</string>
+    <string name="status_sending">● Отправка...</string>
+    <string name="status_session_count">Диалогов за сессию: %1$d</string>
+    <string name="toast_input_truncated">Введённый текст обрезан до %1$d символов.</string>
+
+    <!-- Errors -->
+    <string name="error_invalid_api_key">Неверный API-ключ.</string>
+    <string name="error_timeout">Превышено время ожидания ответа.</string>
+    <string name="error_network">Ошибка соединения. Проверьте интернет-соединение.</string>
+    <string name="error_unknown">Произошла непредвиденная ошибка. Попробуйте ещё раз.</string>
+
+    <!-- Settings screen -->
+    <string name="settings_title">Настройки</string>
+    <string name="action_back">Назад</string>
+    <string name="settings_history_count_label">Диалогов всего</string>
+    <string name="settings_session_count_label">Диалогов за сессию</string>
+    <string name="action_clear_history">Очистить историю</string>
+    <string name="toast_history_cleared">История очищена.</string>
+    <string name="toast_history_clear_failed">Не удалось очистить историю.</string>
+</resources>
