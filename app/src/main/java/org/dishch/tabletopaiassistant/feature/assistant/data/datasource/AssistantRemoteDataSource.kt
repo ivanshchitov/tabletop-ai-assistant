@@ -2,6 +2,7 @@ package org.dishch.tabletopaiassistant.feature.assistant.data.datasource
 
 import javax.inject.Inject
 import org.dishch.tabletopaiassistant.core.network.ApiConfig
+import org.dishch.tabletopaiassistant.core.prompt.SystemPromptProvider
 import org.dishch.tabletopaiassistant.feature.assistant.data.dto.ChatCompletionRequestDto
 import org.dishch.tabletopaiassistant.feature.assistant.data.dto.ChatCompletionResponseDto
 import org.dishch.tabletopaiassistant.feature.assistant.data.dto.MessageDto
@@ -9,6 +10,7 @@ import org.dishch.tabletopaiassistant.feature.assistant.domain.AssistantPrompts
 
 class AssistantRemoteDataSource @Inject constructor(
     private val api: AssistantApi,
+    private val systemPromptProvider: SystemPromptProvider,
 ) {
 
     suspend fun askQuestion(question: String): ChatCompletionResponseDto {
@@ -17,7 +19,7 @@ class AssistantRemoteDataSource @Inject constructor(
             messages = listOf(
                 MessageDto(
                     role = "system",
-                    content = AssistantPrompts.SYSTEM_PROMPT,
+                    content = systemPromptProvider.getSystemPrompt(),
                 ),
                 MessageDto(
                     role = "user",

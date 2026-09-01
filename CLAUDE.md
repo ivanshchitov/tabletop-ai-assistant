@@ -7,8 +7,8 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 Tabletop AI Assistant — a single-module Android app (Kotlin, Jetpack Compose, Material 3) that answers
 board-game questions via an OpenAI-compatible chat completion API (`deepseek-v4-flash` through OpenCode
 Zen, `https://opencode.ai/zen/v1/chat/completions`). The system prompt (role definition + topic
-filtering, a single combined string) is hardcoded in `feature/assistant/domain/AssistantPrompts.kt` and
-never shown in the UI.
+filtering, a single combined string) lives in `app/src/main/assets/system_prompt.md` and is loaded at
+runtime via `core/prompt/SystemPromptProvider`; it is never shown in the UI.
 `android-tabletop-ai-assistant-prompt.md` at the repo root is the original generation spec the app was
 built from — consult it for the full product requirements (error copy, prompt text, functional behavior)
 if a change needs to match the original intent.
@@ -124,11 +124,15 @@ history/session counters and "clear history").
   they go through `core/resources/ResourceProvider` (`getString(resId)` / `getString(resId, vararg args)`,
   Hilt-bound to `ResourceProviderImpl` in `core/di/ResourceModule.kt`) instead of injecting `Context`
   directly — keep using that interface (mockable in ViewModel tests) rather than adding a raw `Context`
-  dependency to a ViewModel. The prompt in `feature/assistant/domain/AssistantPrompts.kt`
-  (`SYSTEM_PROMPT`, which also carries the former agent-prompt instructions — role definition and topic
-  filtering are now one combined string) is a deliberate exception: it's an instruction sent to the LLM, not
-  UI copy, is never rendered on screen, and stays hardcoded in Russian regardless of app locale — don't move
-  it into `strings.xml` or otherwise localize it.
+  dependency to a ViewModel. The LLM system prompt (`app/src/main/assets/system_prompt.md`, which also
+  carries the former agent-prompt instructions — role definition and topic filtering are one combined
+  string) is a deliberate exception to this rule: it's an instruction sent to the LLM, not UI copy, is never
+  rendered on screen, and stays hardcoded in Russian regardless of app locale — don't move it into
+  `strings.xml`, `res/raw/`, or otherwise localize it. It's read via `core/prompt/SystemPromptProvider`
+  (`getSystemPrompt()`, Hilt-bound to `SystemPromptProviderImpl` in `core/di/PromptModule.kt`), which opens
+  the asset through `Context.assets` and caches the trimmed text after the first read;
+  `AssistantRemoteDataSource` injects it instead of a hardcoded Kotlin string constant.
+  `feature/assistant/domain/AssistantPrompts.kt` now only holds `buildUserPrompt()`.
 - **Edge-to-edge + IME**: `MainActivity` calls `enableEdgeToEdge()`, which means `android:windowSoftInputMode`
   in the manifest is not enough to keep the keyboard from covering input fields — Compose needs an explicit
   `Modifier.imePadding()` on the screen's root layout (see the `Scaffold` in `AssistantView.kt`). Add the same
