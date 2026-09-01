@@ -17,7 +17,7 @@ class AssistantRemoteDataSource @Inject constructor(
             messages = listOf(
                 MessageDto(
                     role = "system",
-                    content = "${AssistantPrompts.SYSTEM_PROMPT}\n\n${AssistantPrompts.AGENT_PROMPT}",
+                    content = AssistantPrompts.SYSTEM_PROMPT,
                 ),
                 MessageDto(
                     role = "user",

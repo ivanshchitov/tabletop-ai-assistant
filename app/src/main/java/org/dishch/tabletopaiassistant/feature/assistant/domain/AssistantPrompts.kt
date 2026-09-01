@@ -1,16 +1,14 @@
 package org.dishch.tabletopaiassistant.feature.assistant.domain
 
 /**
- * Fixed system and agent prompts baked into the app. Never shown on screen or
- * editable by the user — they define the assistant's role and the topic filter.
+ * Fixed system prompt baked into the app. Never shown on screen or editable by
+ * the user — it defines the assistant's role and the topic filter.
  */
 object AssistantPrompts {
 
-    const val SYSTEM_PROMPT = "Ты — эксперт по настольным играм (board games). Твоя специализация — " +
-        "правила, стратегии, разрешение спорных ситуаций, рекомендации и история настольных игр. " +
-        "Ты всегда отвечаешь вежливо, структурированно и по делу. Твоё имя — Tabletop AI Assistant."
+    val SYSTEM_PROMPT = """
+Ты — эксперт по настольным играм (board games). Твоя специализация — правила, стратегии, разрешение спорных ситуаций, рекомендации и история настольных игр. Ты всегда отвечаешь вежливо, структурированно и по делу. Твоё имя — Tabletop AI Assistant.
 
-    val AGENT_PROMPT = """
 Твоя задача — обрабатывать только запросы, связанные с настольными играми.
 
 Правила:
